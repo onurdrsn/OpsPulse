@@ -6,16 +6,32 @@ import { createDb } from './db';
 
 type Bindings = {
     DATABASE_URL: string;
+    FRONTEND_URL?: string;
 };
 
 const app = new Hono<{ Bindings: Bindings }>();
 
 // CORS
-app.use('*', cors({
-    origin: '*',
+app.use('*', async (c, next) => {
+  const allowedOrigins = [
+    'http://localhost:5173',
+    c.env.FRONTEND_URL,
+  ].filter(Boolean) as string[];
+
+  const corsMiddleware = cors({
+    origin: (origin) => {
+      if (!origin || allowedOrigins.includes(origin)) {
+        return origin || allowedOrigins[0];
+      }
+      return null;
+    },
     allowMethods: ['POST', 'GET', 'OPTIONS'],
-    allowHeaders: ['Content-Type']
-}));
+    allowHeaders: ['Content-Type'],
+    maxAge: 86400,
+  });
+
+  return corsMiddleware(c, next);
+});
 
 const serviceTypes = [
   'incident-triage',
