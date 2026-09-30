@@ -36,6 +36,9 @@ build: build-web ## Tüm uygulamaları derler
 build-web: ## Cloudflare Pages için web uygulamasını derler (dist/)
 	npm run build --workspace=apps/web
 
+build-worker: ## Cloudflare Worker backend servisini derler
+	npm run build --workspace=apps/worker
+
 deploy-worker: ## Cloudflare Worker backend servisini canlıya alır
 	npm run deploy --workspace=apps/worker
 
