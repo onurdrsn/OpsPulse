@@ -61,7 +61,7 @@ export async function sendLeadNotifications({
     }
     else {
         await resend.emails.send({
-            from: 'OpsPulse Systems <no-reply@onboard.dev>', // Onaylı domaininden kullanıcıya gider
+            from: `OpsPulse Systems {adminEmail}`, // Onaylı domaininden kullanıcıya gider
             to: email, // Formu dolduran adayın e-postası
             subject: `Talebiniz Alındı — OpsPulse Kayıt No: ${leadId.slice(0, 8)}`,
             html: `...`,
@@ -70,7 +70,7 @@ export async function sendLeadNotifications({
     // 2. Operasyon / Admin Bildirimi
     if (adminEmail) {
       await resend.emails.send({
-        from: `OpsPulse Alert no-reply@${adminEmail.split('@')[1]}`,
+        from: `OpsPulse Alert admin@${adminEmail.split('@')[1]}`,
         to: adminEmail,
         subject: `[Yeni Lead] ${serviceType} — ${fullName}`,
         text: `Yeni Talep Alındı:\nID: ${leadId}\nİsim: ${fullName}\nE-posta: ${email}\nHizmet: ${serviceType}\nDetay: ${description}`,
