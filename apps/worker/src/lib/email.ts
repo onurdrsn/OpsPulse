@@ -26,8 +26,7 @@ export async function sendLeadNotifications({
   }
 
   const resend = new Resend(apiKey);
-  const domain = adminEmail.split('@')[1];
-  const senderAddress = `OpsPulse Systems <no-reply@${domain}>`;
+  const senderAddress = `OpsPulse Systems ${adminEmail}>`;
   const shortId = leadId.slice(0, 8);
 
   try {
