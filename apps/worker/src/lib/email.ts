@@ -59,14 +59,6 @@ export async function sendLeadNotifications({
             html: `...`,
         });
     }
-    else {
-        await resend.emails.send({
-            from: `OpsPulse Systems {adminEmail}`, // Onaylı domaininden kullanıcıya gider
-            to: email, // Formu dolduran adayın e-postası
-            subject: `Talebiniz Alındı — OpsPulse Kayıt No: ${leadId.slice(0, 8)}`,
-            html: `...`,
-        });
-    }        
     // 2. Operasyon / Admin Bildirimi
     if (adminEmail) {
       await resend.emails.send({
