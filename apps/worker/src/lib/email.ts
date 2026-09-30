@@ -19,20 +19,19 @@ export async function sendLeadNotifications({
   description,
   adminEmail,
 }: SendNotificationParams): Promise<void> {
-  // 1. Guard Clause: Gerekli anahtar veya admin e-postası yoksa çık
   if (!apiKey || !adminEmail) {
     console.warn('[Resend] API anahtarı veya onaylı admin e-postası eksik, bildirimler atlandı.');
     return;
   }
 
   const resend = new Resend(apiKey);
+  // Açılış '<' işareti eklendi:
   const senderAddress = `OpsPulse Systems <${adminEmail}>`;
   const shortId = leadId.slice(0, 8);
 
   try {
-    // 2. İki e-postayı eşzamanlı (paralel) ilet
-    await Promise.allSettled([
-      // Adaya giden onay e-postası
+    const results = await Promise.allSettled([
+      // 1. Adaya Onay E-postası
       resend.emails.send({
         from: senderAddress,
         to: email,
@@ -56,7 +55,7 @@ export async function sendLeadNotifications({
         `,
       }),
 
-      // Operasyon ekibine giden bildirim (replyTo ile doğrudan adaya yanıtlanabilir)
+      // 2. Operasyon Ekibine Bildirim
       resend.emails.send({
         from: senderAddress,
         to: adminEmail,
@@ -65,7 +64,21 @@ export async function sendLeadNotifications({
         text: `Yeni Talep Alındı:\n\nID: ${leadId}\nİsim: ${fullName}\nE-posta: ${email}\nHizmet: ${serviceType}\n\nDetay:\n${description}`,
       }),
     ]);
+
+    // Resend hata yanıtlarını konsola net olarak bas:
+    results.forEach((res, index) => {
+      const target = index === 0 ? `Aday (${email})` : `Admin (${adminEmail})`;
+      if (res.status === 'fulfilled') {
+        if (res.value.error) {
+          console.error(`[Resend Hatası -> ${target}]:`, res.value.error);
+        } else {
+          console.log(`[Resend Başarılı -> ${target}]: ID = ${res.value.data?.id}`);
+        }
+      } else {
+        console.error(`[Resend İstek Reddedildi -> ${target}]:`, res.reason);
+      }
+    });
   } catch (err) {
-    console.error('[Resend Error]:', err);
+    console.error('[Resend Genel Hata]:', err);
   }
 }
