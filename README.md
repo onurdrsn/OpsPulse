@@ -1,10 +1,8 @@
 # OpsPulse — Autonomous Incident & Workflow Automation Platform
 
-> **Live Production URL:** [https://opspulse.pages.dev](https://opspulse.pages.dev)  
-> **API Worker Gateway:** [https://opspulse-api.workers.dev](https://opspulse-api.workers.dev)  
-> **Source Repository:** [https://github.com/onurdrsn/opspulse](https://github.com/onurdrsn/opspulse)  
-> **Submission Git Commit SHA:** `7e4f1a9c3d2e8b0a1f5d6c7b9e0a4f2d8c1b3a5e`
-
+> **Live Production URL:** [https://opspulse.onurd.com.tr](https://opspulse.onurd.com.tr)  
+> **API Worker Gateway:** [https://opspulse-api.onurd.com.tr](https://opspulse-api.onurd.com.tr)  
+> **Source Repository:** [https://github.com/onurdrsn/OpsPulse](https://github.com/onurdrsn/OpsPulse)  
 ---
 
 ## 1. Executive Summary & Problem Scope
@@ -97,7 +95,7 @@ opspulse/
 
 1. **Clone the repository:**
    ```bash
-   git clone https://github.com/onurdrsn/opspulse.git
+   git clone https://github.com/onurdrsn/OpsPulse.git
    cd opspulse
    ```
 
