@@ -1,0 +1,16 @@
+{
+  "compilerOptions": {
+    "target": "ESNext",
+    "module": "ESNext",
+    "moduleResolution": "bundler",
+    "strict": true,
+    "verbatimModuleSyntax": false,
+    "skipLibCheck": true,
+    "types": ["vite/client", "@cloudflare/workers-types"]
+  },
+  "references": [
+    { "path": "./apps/web" },
+    { "path": "./apps/worker" }
+  ],
+  "files": []
+}
